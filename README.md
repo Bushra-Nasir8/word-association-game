@@ -1,6 +1,3 @@
-
-# word-association-game
-=======
 # Word Association Game
 
 A web-based Word Association Game built with Flask and JavaScript.
