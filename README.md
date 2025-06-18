@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # word-association-game
 =======
 # Word Association Game
