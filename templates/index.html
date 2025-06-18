@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Word Association Game - Home{% endblock %}
+
+{% block content %}
+<div class="start-screen">
+    <h2>Welcome to the Word Association Game!</h2>
+    
+    <div class="rules">
+        <h3>How to Play:</h3>
+        <ul>
+            <li>You'll be shown a random word</li>
+            <li>Type a related word within 5 seconds</li>
+            <li>Get 1 point for each valid association</li>
+            <li>Game ends after 3 strikes or timeouts</li>
+            <li>Avoid using taboo words!</li>
+        </ul>
+    </div>
+    
+    <a href="{{ url_for('game') }}" class="btn start-btn">Start Game</a>
+    <a href="{{ url_for('high_scores') }}" class="btn high-scores-btn">High Scores</a>
+</div>
+{% endblock %}

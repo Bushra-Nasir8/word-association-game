@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block title %}Word Association Game - Play{% endblock %}
+
+{% block content %}
+<div class="game-screen">
+    <div class="game-info">
+        <div class="score">Score: <span id="score">0</span></div>
+        <div class="strikes">Strikes: <span id="strikes">0</span></div>
+        <div class="timer">Time: <span id="timer">5</span>s</div>
+    </div>
+    
+    <div class="game-area">
+        <div class="instructions">
+            <p>Type a word associated with the word below:</p>
+            <p>You have 5 seconds for each word!</p>
+        </div>
+        
+        <div class="word-display">
+            <h2 id="current-word">{{ word }}</h2>
+        </div>
+        
+        <div class="input-area">
+            <input type="text" id="player-input" placeholder="Type your word..." autocomplete="off">
+            <button id="submit-btn">Submit</button>
+        </div>
+        
+        <div class="message" id="message"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const currentWordElement = document.getElementById('current-word');
+        const playerInput = document.getElementById('player-input');
+        const submitBtn = document.getElementById('submit-btn');
+        const scoreElement = document.getElementById('score');
+        const strikesElement = document.getElementById('strikes');
+        const timerElement = document.getElementById('timer');
+        const messageElement = document.getElementById('message');
+        
+        let score = 0;
+        let strikes = 0;
+        let timeLeft = 5;
+        let timerInterval;
+        let startTime;
+        
+        // Focus on input field
+        playerInput.focus();
+        
+        // Start timer
+        startTimer();
+        
+        // Submit button click handler
+        submitBtn.addEventListener('click', submitAnswer);
+        
+        // Enter key handler
+        playerInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                submitAnswer();
+            }
+        });
+        
+        function startTimer() {
+            startTime = Date.now();
+            timeLeft = 5;
+            timerElement.textContent = timeLeft;
+            
+            clearInterval(timerInterval);
+            timerInterval = setInterval(function() {
+                timeLeft = 5 - Math.floor((Date.now() - startTime) / 1000);
+                
+                if (timeLeft < 0) {
+                    timeLeft = 0;
+                    clearInterval(timerInterval);
+                    submitAnswer(true);
+                }
+                
+                timerElement.textContent = timeLeft;
+            }, 100);
+        }
+        
+        function submitAnswer(timeout = false) {
+            const timeTaken = (Date.now() - startTime) / 1000;
+            const playerWord = playerInput.value.trim();
+            
+            if (timeout && playerWord === '') {
+                // If timeout and no input, submit timeout
+                sendAnswer('', timeTaken);
+            } else if (!timeout && playerWord === '') {
+                // If manual submit but empty input, show message but don't submit
+                showMessage('Please enter a word!', 'error');
+            } else {
+                // Submit the answer
+                sendAnswer(playerWord, timeTaken);
+            }
+        }
+        
+        function sendAnswer(word, timeTaken) {
+            fetch('/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    word: word,
+                    time: timeTaken
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Update score and strikes
+                score = data.score;
+                strikes = data.strikes;
+                scoreElement.textContent = score;
+                strikesElement.textContent = strikes;
+                
+                // Show message
+                showMessage(data.message, data.valid ? 'success' : 'error');
+                
+                // Check if game over
+                if (data.game_over) {
+                    endGame();
+                } else if (data.next_word) {
+                    // Update word and reset timer
+                    currentWordElement.textContent = data.next_word;
+                    playerInput.value = '';
+                    playerInput.focus();
+                    startTimer();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showMessage('An error occurred. Please try again.', 'error');
+            });
+        }
+        
+        function showMessage(text, type) {
+            messageElement.textContent = text;
+            messageElement.className = 'message ' + type;
+            
+            // Clear message after 2 seconds
+            setTimeout(() => {
+                messageElement.textContent = '';
+                messageElement.className = 'message';
+            }, 2000);
+        }
+        
+        function endGame() {
+            clearInterval(timerInterval);
+            window.location.href = '/end';
+        }
+    });
+</script>
+{% endblock %}

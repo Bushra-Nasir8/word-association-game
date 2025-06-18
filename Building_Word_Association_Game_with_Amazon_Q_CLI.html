@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Building a Word Association Game with Amazon Q CLI</title>
+    <style>
+        body {
+            font-family: 'Calibri', Arial, sans-serif;
+            line-height: 1.5;
+            margin: 2em;
+            max-width: 800px;
+        }
+        h1 {
+            font-size: 24pt;
+            color: #2F5496;
+        }
+        h2 {
+            font-size: 18pt;
+            color: #2F5496;
+            margin-top: 1.5em;
+        }
+        h3 {
+            font-size: 14pt;
+            color: #2F5496;
+        }
+        code {
+            font-family: 'Courier New', monospace;
+            background-color: #f5f5f5;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        pre {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        blockquote {
+            border-left: 4px solid #ddd;
+            padding-left: 1em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>Building a Word Association Game with Amazon Q CLI: A Developer's Journey</h1>
+
+    <h2>Introduction</h2>
+    <p>Recently, I embarked on a journey to build a Word Association Game using Python Flask and JavaScript. Instead of starting from scratch and writing all the code myself, I decided to leverage Amazon Q CLI, an AI assistant that helped me generate the entire application through natural language prompts. In this article, I'll share my experience, the prompts I used, and how this tool accelerated my development process.</p>
+
+    <h2>Getting Started with Amazon Q CLI</h2>
+    <p>Before diving into the project, I needed to set up Amazon Q CLI. The installation process was straightforward:</p>
+    <pre><code># Install Amazon Q CLI
+pip install amazon-q-cli
+
+# Start a conversation
+q chat</code></pre>
+    <p>Once installed, I was ready to begin my project with a simple conversation interface that understood my requirements and could generate code accordingly.</p>
+
+    <h2>The Initial Prompt: Defining the Game</h2>
+    <p>My journey began with a comprehensive prompt describing what I wanted to build:</p>
+    <pre><code>Create a web-based "Word Association Game" using Python (Flask) for the backend and HTML/CSS/JavaScript for the frontend. The game should run locally and be accessible via a browser at http://localhost:5000.</code></pre>
+    <p>I then provided more detailed requirements:</p>
+    <pre><code>The game should show a random starter word.
+The player must respond with a related word within a short time limit (5 seconds).
+The system evaluates the response:
+- If it's a reasonable association, give a point.
+- If it's unrelated or too slow, end the round or show a strike.
+- Include a simple dictionary or related-word logic to validate answers.
+
+Features to Include:
+- Start screen with a "Start Game" button
+- Random starter word generation
+- 5-second timer countdown
+- Text input box and submit button
+- Scoring system (+1 point for valid associations)
+- Game ends after 3 strikes or timeouts
+- Taboo words that trigger instant strikes
+- Final score summary screen with restart option
+- High scores stored in JSON/CSV file</code></pre>
+
+    <h2>The Development Process</h2>
+    <p>What amazed me was how Amazon Q CLI immediately understood my requirements and began generating the complete application structure. Here's how the process unfolded:</p>
+
+    <h3>1. Project Structure Creation</h3>
+    <p>Q CLI first created the necessary directories for my project:</p>
+    <pre><code>/word-association/
+├── static/
+│   ├── css/
+│   └── js/
+└── templates/</code></pre>
+
+    <h3>2. Flask Application Setup</h3>
+    <p>Next, it generated the <code>app.py</code> file with all the necessary Flask routes and game logic:</p>
+    <ul>
+        <li>Random word selection from a predefined list</li>
+        <li>Timer implementation for the 5-second countdown</li>
+        <li>Score tracking and strike system</li>
+        <li>Taboo words detection</li>
+        <li>High score storage in a JSON file</li>
+    </ul>
+
+    <h3>3. Frontend Development</h3>
+    <p>The frontend was created with clean, responsive HTML templates and CSS:</p>
+    <ul>
+        <li><code>base.html</code>: The base template with common elements</li>
+        <li><code>index.html</code>: Home/start screen with game instructions</li>
+        <li><code>game.html</code>: Main game screen with word display and input</li>
+        <li><code>end.html</code>: Game over screen showing final score</li>
+        <li><code>high_scores.html</code>: Display of top scores</li>
+    </ul>
+    <p>The JavaScript implementation handled:</p>
+    <ul>
+        <li>Timer countdown visualization</li>
+        <li>Form submission and validation</li>
+        <li>AJAX requests to the backend</li>
+        <li>Score and strike updates</li>
+    </ul>
+
+    <h3>4. Debugging and Fixes</h3>
+    <p>During implementation, we encountered a syntax error with a single quote in a string that contained an apostrophe:</p>
+    <pre><code>'message': 'Time's up!',  # This caused a syntax error</code></pre>
+    <p>Q CLI quickly identified and fixed the issue by replacing it with double quotes:</p>
+    <pre><code>'message': "Time's up!",  # Fixed version</code></pre>
+
+    <h2>The Final Product</h2>
+    <p>The completed game included all requested features:</p>
+    <ul>
+        <li>A clean, responsive UI that works on both desktop and mobile</li>
+        <li>Random word generation from a predefined list</li>
+        <li>5-second countdown timer with visual feedback</li>
+        <li>Score tracking and 3-strike system</li>
+        <li>Taboo words detection</li>
+        <li>High score storage and display</li>
+        <li>Comprehensive game instructions</li>
+    </ul>
+
+    <h2>Lessons Learned</h2>
+    <p>Working with Amazon Q CLI taught me several valuable lessons:</p>
+    <ol>
+        <li><strong>Rapid Prototyping</strong>: What would have taken days of coding was accomplished in a single session.</li>
+        <li><strong>Comprehensive Solutions</strong>: Q CLI didn't just provide code snippets but created a complete, working application with proper structure.</li>
+        <li><strong>Learning Opportunity</strong>: The generated code served as an excellent learning resource, showing best practices for Flask application structure and JavaScript integration.</li>
+        <li><strong>Iterative Development</strong>: I could refine my requirements through conversation, making the development process more interactive.</li>
+    </ol>
+
+    <h2>Setup Instructions</h2>
+    <p>If you want to try this game yourself, here's how to set it up:</p>
+    <ol>
+        <li>Make sure you have Python installed (Python 3.6 or higher recommended)</li>
+        <li>Create a virtual environment:
+            <pre><code>python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate</code></pre>
+        </li>
+        <li>Install Flask:
+            <pre><code>pip install flask</code></pre>
+        </li>
+        <li>Run the application:
+            <pre><code>python app.py</code></pre>
+        </li>
+        <li>Open your browser and navigate to:
+            <pre><code>http://localhost:5000</code></pre>
+        </li>
+    </ol>
+
+    <h2>Conclusion</h2>
+    <p>Building the Word Association Game with Amazon Q CLI was an eye-opening experience. It demonstrated how AI tools can significantly accelerate development without sacrificing quality. The entire process—from concept to working application—was streamlined and educational.</p>
+    <p>For developers looking to quickly prototype ideas or learn new frameworks, tools like Amazon Q CLI offer a powerful way to generate functional code through natural language prompts. While there's still value in writing code from scratch for learning purposes, AI assistants provide an excellent complement to traditional development approaches.</p>
+    <p>Have you tried using AI tools in your development workflow? I'd love to hear about your experiences in the comments below!</p>
+
+    <hr>
+    <p><em>This article was written based on my experience building a Word Association Game with Amazon Q CLI in June 2025.</em></p>
+</body>
+</html>

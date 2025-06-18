@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Word Association Game - High Scores{% endblock %}
+
+{% block content %}
+<div class="high-scores-screen">
+    <h2>High Scores</h2>
+    
+    <div class="scores-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Name</th>
+                    <th>Score</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if scores %}
+                    {% for score in scores %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ score.name }}</td>
+                            <td>{{ score.score }}</td>
+                            <td>{{ score.date }}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="4">No high scores yet!</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="high-scores-actions">
+        <a href="{{ url_for('game') }}" class="btn play-btn">Play Game</a>
+        <a href="{{ url_for('index') }}" class="btn home-btn">Back to Home</a>
+    </div>
+</div>
+{% endblock %}

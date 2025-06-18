@@ -1,0 +1,167 @@
+# Building a Word Association Game with Amazon Q CLI: A Developer's Journey
+
+## Introduction
+
+Recently, I embarked on a journey to build a Word Association Game using Python Flask and JavaScript. Instead of starting from scratch and writing all the code myself, I decided to leverage Amazon Q CLI, an AI assistant that helped me generate the entire application through natural language prompts. In this article, I'll share my experience, the prompts I used, and how this tool accelerated my development process.
+
+## Getting Started with Amazon Q CLI
+
+Before diving into the project, I needed to set up Amazon Q CLI. The installation process was straightforward:
+
+```bash
+# Install Amazon Q CLI
+pip install amazon-q-cli
+
+# Start a conversation
+q chat
+```
+
+Once installed, I was ready to begin my project with a simple conversation interface that understood my requirements and could generate code accordingly.
+
+## The Initial Prompt: Defining the Game
+
+My journey began with a comprehensive prompt describing what I wanted to build:
+
+```
+Create a web-based "Word Association Game" using Python (Flask) for the backend and HTML/CSS/JavaScript for the frontend. The game should run locally and be accessible via a browser at http://localhost:5000.
+```
+
+I then provided more detailed requirements:
+
+```
+The game should show a random starter word.
+The player must respond with a related word within a short time limit (5 seconds).
+The system evaluates the response:
+- If it's a reasonable association, give a point.
+- If it's unrelated or too slow, end the round or show a strike.
+- Include a simple dictionary or related-word logic to validate answers.
+
+Features to Include:
+- Start screen with a "Start Game" button
+- Random starter word generation
+- 5-second timer countdown
+- Text input box and submit button
+- Scoring system (+1 point for valid associations)
+- Game ends after 3 strikes or timeouts
+- Taboo words that trigger instant strikes
+- Final score summary screen with restart option
+- High scores stored in JSON/CSV file
+```
+
+## The Development Process
+
+What amazed me was how Amazon Q CLI immediately understood my requirements and began generating the complete application structure. Here's how the process unfolded:
+
+### 1. Project Structure Creation
+
+Q CLI first created the necessary directories for my project:
+
+```
+/word-association/
+├── static/
+│   ├── css/
+│   └── js/
+└── templates/
+```
+
+### 2. Flask Application Setup
+
+Next, it generated the `app.py` file with all the necessary Flask routes and game logic:
+
+- Random word selection from a predefined list
+- Timer implementation for the 5-second countdown
+- Score tracking and strike system
+- Taboo words detection
+- High score storage in a JSON file
+
+### 3. Frontend Development
+
+The frontend was created with clean, responsive HTML templates and CSS:
+
+- `base.html`: The base template with common elements
+- `index.html`: Home/start screen with game instructions
+- `game.html`: Main game screen with word display and input
+- `end.html`: Game over screen showing final score
+- `high_scores.html`: Display of top scores
+
+The JavaScript implementation handled:
+- Timer countdown visualization
+- Form submission and validation
+- AJAX requests to the backend
+- Score and strike updates
+
+### 4. Debugging and Fixes
+
+During implementation, we encountered a syntax error with a single quote in a string that contained an apostrophe:
+
+```python
+'message': 'Time's up!',  # This caused a syntax error
+```
+
+Q CLI quickly identified and fixed the issue by replacing it with double quotes:
+
+```python
+'message': "Time's up!",  # Fixed version
+```
+
+## The Final Product
+
+The completed game included all requested features:
+- A clean, responsive UI that works on both desktop and mobile
+- Random word generation from a predefined list
+- 5-second countdown timer with visual feedback
+- Score tracking and 3-strike system
+- Taboo words detection
+- High score storage and display
+- Comprehensive game instructions
+
+## Lessons Learned
+
+Working with Amazon Q CLI taught me several valuable lessons:
+
+1. **Rapid Prototyping**: What would have taken days of coding was accomplished in a single session.
+
+2. **Comprehensive Solutions**: Q CLI didn't just provide code snippets but created a complete, working application with proper structure.
+
+3. **Learning Opportunity**: The generated code served as an excellent learning resource, showing best practices for Flask application structure and JavaScript integration.
+
+4. **Iterative Development**: I could refine my requirements through conversation, making the development process more interactive.
+
+## Setup Instructions
+
+If you want to try this game yourself, here's how to set it up:
+
+1. Make sure you have Python installed (Python 3.6 or higher recommended)
+
+2. Create a virtual environment:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+
+3. Install Flask:
+   ```bash
+   pip install flask
+   ```
+
+4. Run the application:
+   ```bash
+   python app.py
+   ```
+
+5. Open your browser and navigate to:
+   ```
+   http://localhost:5000
+   ```
+
+## Conclusion
+
+Building the Word Association Game with Amazon Q CLI was an eye-opening experience. It demonstrated how AI tools can significantly accelerate development without sacrificing quality. The entire process—from concept to working application—was streamlined and educational.
+
+For developers looking to quickly prototype ideas or learn new frameworks, tools like Amazon Q CLI offer a powerful way to generate functional code through natural language prompts. While there's still value in writing code from scratch for learning purposes, AI assistants provide an excellent complement to traditional development approaches.
+
+Have you tried using AI tools in your development workflow? I'd love to hear about your experiences in the comments below!
+
+---
+
+*This article was written based on my experience building a Word Association Game with Amazon Q CLI in June 2025.*

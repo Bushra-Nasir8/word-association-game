@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Word Association Game - Game Over{% endblock %}
+
+{% block content %}
+<div class="end-screen">
+    <h2>Game Over!</h2>
+    
+    <div class="final-score">
+        <h3>Your Final Score: <span>{{ score }}</span></h3>
+    </div>
+    
+    <div class="save-score">
+        <h3>Save Your Score</h3>
+        <form action="{{ url_for('end') }}" method="post">
+            <div class="form-group">
+                <label for="name">Your Name:</label>
+                <input type="text" id="name" name="name" required maxlength="20">
+            </div>
+            <button type="submit" class="btn save-btn">Save Score</button>
+        </form>
+    </div>
+    
+    <div class="end-actions">
+        <a href="{{ url_for('game') }}" class="btn play-again-btn">Play Again</a>
+        <a href="{{ url_for('index') }}" class="btn home-btn">Back to Home</a>
+    </div>
+</div>
+{% endblock %}
